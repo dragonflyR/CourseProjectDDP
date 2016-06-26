@@ -1,0 +1,47 @@
+Regression Analysis
+========================================================
+author: Steve Chiu
+date: 26 June 2016
+autosize: true
+
+A Shiny App to illustrate the correlations of 4 European stock indices.
+
+Background and App Function
+========================================================
+
+With the EuStockMarkets dataset, the webpage show the inter-corelations of the daily return of the four stock market indices, namely:
+- DAX of Germany
+- SMI of Switzerland
+- CAC of France
+- FTSE of United Kingdom
+
+The dataset contains daily index closing from 1991 to 1998.
+
+We target to explore their correlations by a liner regression model on their daily returns.  User may pick any of the two indices to get the lm graph and respective diagnostic plots.
+
+The European stock indices performed similarly...
+========================================================
+```{r, echo=FALSE}
+plot(EuStockMarkets, main="")
+```
+
+Example - FTSE ~ DAX Linear Regression
+========================================================
+```{r, echo=FALSE}
+sdata <- as.data.frame(EuStockMarkets)
+scount <- nrow(sdata)
+sreturn <- sdata[-1,] / sdata[-scount,] - 1
+plot(sreturn$FTSE ~ sreturn$DAX, xlab = "DAX", ylab = "FTSE")
+fit <- lm(FTSE ~ DAX, data=sreturn)
+abline(fit, lwd=3, col="red")
+```
+
+Example - FTSE ~ DAX Diagnostic Plots
+========================================================
+```{r, echo=FALSE}
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+
+Github Repository: <http://https://github.com/dragonflyR/CourseProjectDDP>
